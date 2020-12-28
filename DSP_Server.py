@@ -23,7 +23,8 @@ class requestHandler(BaseHTTPRequestHandler):
         print(ssp_post)
         print("--------------------POST from SSP----------------")
 
-        requestHandler.response = self.mysql.bidding_strategy(bid_floor=ssp_post["bid_floor"])
+        requestHandler.response = self.mysql.bidding_process(bid_floor=ssp_post["bid_floor"])
+        # requestHandler.response = self.mysql.bidding_strategy(bid_floor=ssp_post["bid_floor"])
         if requestHandler.response != None:
             requestHandler.response = json.dumps(requestHandler.response)
             self.send_response(200)
@@ -53,7 +54,7 @@ class requestHandler(BaseHTTPRequestHandler):
             self.wfile.write(f"<h1>{requestHandler.response}<h1> ".encode())
 
 if __name__ == "__main__":
-    local, PORT = "localhost", 9000
+    local, PORT = "127.0.0.1", 9000
     address = (local, PORT)
 
     server = HTTPServer(address, requestHandler)

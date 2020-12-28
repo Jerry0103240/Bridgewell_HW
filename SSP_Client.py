@@ -16,8 +16,7 @@ class SSP_client():
         start = time.time()
         conn.request('POST', '/ippinte/api/scene/getall', self.bid_floor.encode('utf-8'), headers)
         response = conn.getresponse()
-        request_time = time.time() - start
-        print(f"Request completed in {request_time} sec.")
+        print(f"Request completed in {time.time() - start} sec.")
 
         if response.status == 200:
             stc1 = response.read().decode('utf-8')
@@ -28,11 +27,11 @@ class SSP_client():
             conn.close()
         else:
             print("-----------------RESPONSE from DSP----------------")
-            print("response = 204, No contents in response")
+            print("Response = 204, No contents in response")
             print("-----------------RESPONSE from DSP----------------")
             conn.close()
 
 if __name__ == "__main__":
     bid_floor = {'bid_floor': 12.00}
     client = SSP_client(bid_floor)
-    client.POST(local="localhost", PORT=9000)
+    client.POST(local="127.0.0.1", PORT=9000)
